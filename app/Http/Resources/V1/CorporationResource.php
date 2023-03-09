@@ -15,10 +15,10 @@ class CorporationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'corporation_name' => $this->name,
-            'service' => $this->service,
-            'full_name' => $this->users->first()->name,
-            'email' => $this->users->first()->email,
+            'corporation_name'  => $this->name,
+            'service'           => $this->service,
+            'full_name'         => $this->users->first()->name,
+            'email'             => $this->users->first()->email,
         ];
     }
 }

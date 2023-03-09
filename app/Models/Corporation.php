@@ -24,4 +24,12 @@ class Corporation extends Model
     {
         return $this->hasmany(User::class);
     }
+
+    /**
+     * Get the groups that is in the corporation.
+     */
+    public function groups(): HasMany
+    {
+        return $this->hasmany(Group::class);
+    }
 }

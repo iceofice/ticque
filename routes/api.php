@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CorporationController;
+use App\Http\Controllers\Api\V1\GroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // v1
 Route::prefix('v1')->group(function () {
-    // Route::apiResource('corporations', CorporationController::class);
-    Route::post('corporations/register', [CorporationController::class, 'register']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        // Route::apiResource('corporations', CorporationController::class);
+        Route::apiResource('groups', GroupController::class);
+    });
 });
