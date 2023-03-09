@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreGroupRequest;
+use App\Http\Resources\V1\GroupCollection;
 use App\Http\Resources\V1\GroupResource;
 use App\Models\Group;
 use Auth;
@@ -19,7 +20,9 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Auth::user()->corporation->groups;
+
+        return new GroupCollection($groups);
     }
 
     /**
@@ -36,15 +39,15 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Groups $groups)
+    public function show(Group $group)
     {
-        //
+        return new GroupResource($group);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Groups $groups)
+    public function update(Request $request, Group $group)
     {
         //
     }
@@ -52,7 +55,7 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Groups $groups)
+    public function destroy(Group $group)
     {
         //
     }
