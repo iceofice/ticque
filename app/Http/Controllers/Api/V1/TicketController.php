@@ -3,47 +3,26 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\V1\NextTicketRequest;
+use App\Http\Resources\V1\TicketResource;
+use App\Models\Group;
+use App\Models\Ticket;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function next(NextTicketRequest $request)
     {
-        //
-    }
+        //TODO: Move into service/task
+        $group = Group::with('tickets')->find($request->group_id);
+        $last_ticket = $group->tickets()->latest('id')->first();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $ticket_number = is_null($last_ticket) ? 1 : $last_ticket->number + 1;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $new_ticket = $group->tickets()->create([
+            'number' => $ticket_number,
+            'status' => 1
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return new TicketResource($new_ticket);
     }
 }
