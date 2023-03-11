@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->foreignId('corporation_id')->constrained();
+            $table->integer('number');
+            $table->foreignId('group_id')->constrained();
             $table->smallInteger('status');
             $table->timestamps();
         });
