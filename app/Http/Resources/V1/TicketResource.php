@@ -16,7 +16,7 @@ class TicketResource extends JsonResource
     {
         return [
             'number'    => $this->number,
-            'status'    => $this->status, //TODO: ENUM of the status
+            'status'    => $this->status->getStatusText(),
             'group'     => $this->group->name,
         ];
     }
